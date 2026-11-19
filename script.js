@@ -86,7 +86,10 @@
 
   async function requestCount(method, key) {
     const controller = new AbortController();
-    const timeout = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+    const timeout = window.setTimeout(
+      () => controller.abort(new DOMException("Request timed out", "TimeoutError")),
+      REQUEST_TIMEOUT_MS,
+    );
 
     try {
       const response = await fetch(
