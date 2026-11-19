@@ -405,11 +405,27 @@ h2 {
   font-size: 0.62rem;
 }
 
-.last-click time {
+.last-click-list {
+  margin-top: 9px;
+}
+
+.last-click-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--green-dim);
+}
+
+.last-click-row > span {
+  color: var(--green-muted);
+}
+
+.last-click-row time {
   display: block;
-  margin-top: 5px;
   color: var(--text);
   font-size: 0.72rem;
+  text-align: right;
 }
 
 .manifesto {

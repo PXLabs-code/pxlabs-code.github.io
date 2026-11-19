@@ -15,7 +15,7 @@
   const buttonList = document.querySelector("#button-list");
   const statsList = document.querySelector("#stats-list");
   const clickLog = document.querySelector("#click-log");
-  const lastClickTime = document.querySelector("#last-click-time");
+  const lastClickList = document.querySelector("#last-click-list");
   const values = new Map();
   const recentReports = new Map();
 
@@ -43,11 +43,27 @@
 
       row.append(label, value);
       statsList.append(row);
+
+      const localRow = document.createElement("div");
+      localRow.className = "last-click-row";
+
+      const localLabel = document.createElement("span");
+      localLabel.textContent = `${button.key}/`;
+
+      const localTime = document.createElement("time");
+      localTime.id = lastClickId(button.key);
+      localTime.textContent = "never";
+      localRow.append(localLabel, localTime);
+      lastClickList.append(localRow);
     });
   }
 
   function statId(key) {
     return `stat-${encodeURIComponent(key)}`;
+  }
+
+  function lastClickId(key) {
+    return `last-click-${encodeURIComponent(key)}`;
   }
 
   function showOnline() {
@@ -145,20 +161,27 @@
   }
 
   function saveLastClick(key, timestamp) {
-    const value = { key, timestamp: new Date(timestamp).toISOString() };
-    if (storageSet(`pxlabs:${config.NAMESPACE}:last-click`, JSON.stringify(value))) {
-      renderLastClick(value);
+    const value = { timestamp: new Date(timestamp).toISOString() };
+    if (storageSet(lastClickStorageKey(key), JSON.stringify(value))) {
+      renderLastClick(key, value);
     } else {
-      lastClickTime.removeAttribute("datetime");
-      lastClickTime.textContent = "storage unavailable";
+      const target = document.getElementById(lastClickId(key));
+      target?.removeAttribute("datetime");
+      if (target) target.textContent = "storage unavailable";
     }
   }
 
-  function renderLastClick(value) {
+  function lastClickStorageKey(key) {
+    return `pxlabs:${config.NAMESPACE}:last-click:${key}`;
+  }
+
+  function renderLastClick(key, value) {
     const date = new Date(value.timestamp);
     if (Number.isNaN(date.getTime())) return;
-    lastClickTime.dateTime = date.toISOString();
-    lastClickTime.textContent = `${value.key} · ${date.toLocaleString()}`;
+    const target = document.getElementById(lastClickId(key));
+    if (!target) return;
+    target.dateTime = date.toISOString();
+    target.textContent = date.toLocaleString();
   }
 
   async function handleClick(button) {
@@ -185,14 +208,16 @@
   }
 
   function restoreLastClick() {
-    const raw = storageGet(`pxlabs:${config.NAMESPACE}:last-click`);
-    if (!raw) return;
+    config.BUTTONS.forEach(({ key }) => {
+      const raw = storageGet(lastClickStorageKey(key));
+      if (!raw) return;
 
-    try {
-      renderLastClick(JSON.parse(raw));
-    } catch (error) {
-      console.warn("Ignoring invalid saved click timestamp:", error);
-    }
+      try {
+        renderLastClick(key, JSON.parse(raw));
+      } catch (error) {
+        console.warn(`Ignoring invalid saved click timestamp for ${key}:`, error);
+      }
+    });
   }
 
   function animateBootText() {
