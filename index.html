@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="PXLabs 的极客终端风个人主页，包含项目、联系方式与实时点击统计。"
+    />
+    <meta name="theme-color" content="#050806" />
+    <title>PXLabs // terminal home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="config.js" defer></script>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="scanlines" aria-hidden="true"></div>
+    <div class="site-shell">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="返回页面顶部">
+          <span class="brand-mark">&gt;_</span>
+          pxlabs<span class="brand-dim">.dev</span>
+        </a>
+        <span class="system-state"><i aria-hidden="true"></i> system online</span>
+      </header>
+
+      <main id="top">
+        <section class="hero terminal-panel" aria-labelledby="page-title">
+          <div class="panel-bar">
+            <span class="window-dots" aria-hidden="true">
+              <i></i><i></i><i></i>
+            </span>
+            <span>pxlabs@home:~</span>
+            <span class="panel-code">TERM/01</span>
+          </div>
+
+          <div class="hero-body">
+            <p class="eyebrow">HELLO, WORLD<span class="cursor" aria-hidden="true"></span></p>
+            <h1 id="page-title">BUILD. BREAK.<br /><span>ITERATE.</span></h1>
+            <p class="boot-copy">
+              <span class="prompt">$</span>
+              <span id="boot-text">Initializing personal node...</span>
+            </p>
+
+            <div class="terminal-session" aria-label="终端式自我介绍">
+              <div class="command-row command-delay-1">
+                <p><span class="prompt">visitor@pxlabs:~$</span> whoami</p>
+                <p class="output">[YOUR NAME] · developer / maker / lifelong learner</p>
+              </div>
+              <div class="command-row command-delay-2">
+                <p><span class="prompt">visitor@pxlabs:~$</span> ls projects</p>
+                <p class="output">
+                  <span>project-alpha/</span>
+                  <span>open-source-lab/</span>
+                  <span>next-idea.txt</span>
+                </p>
+              </div>
+              <div class="command-row command-delay-3">
+                <p><span class="prompt">visitor@pxlabs:~$</span> cat contact</p>
+                <p class="output">
+                  mail: <a href="mailto:hello@example.com">hello@example.com</a><br />
+                  github: <a href="https://github.com/PXLabs-code">@PXLabs-code</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="dashboard" aria-label="操作与统计">
+          <article class="action-panel terminal-panel">
+            <div class="section-heading">
+              <span>01</span>
+              <h2>RUN A COMMAND</h2>
+            </div>
+            <p class="muted">Choose a channel. Each verified click updates the counter.</p>
+            <div id="button-list" class="button-list" aria-label="计数按钮"></div>
+            <div id="click-log" class="click-log" role="log" aria-live="polite">
+              <span class="log-placeholder">&gt; waiting for input<span class="cursor"></span></span>
+            </div>
+          </article>
+
+          <aside class="stats-panel terminal-panel" aria-labelledby="stats-title">
+            <div class="section-heading">
+              <span>02</span>
+              <h2 id="stats-title">LIVE METRICS</h2>
+            </div>
+            <div class="stats-status">
+              <span id="stats-status"><i aria-hidden="true"></i> connecting...</span>
+              <span>ABACUS/API</span>
+            </div>
+            <dl id="stats-list" class="stats-list" aria-live="polite"></dl>
+            <div class="last-click">
+              <span>LOCAL/LAST_CLICK</span>
+              <time id="last-click-time">never</time>
+            </div>
+          </aside>
+        </section>
+
+        <section class="manifesto terminal-panel" aria-label="个人签名">
+          <span class="manifesto-index">///</span>
+          <p>Code is a conversation with the future.<br />Keep the signal clear.</p>
+          <span class="manifesto-glyph" aria-hidden="true">⌘</span>
+        </section>
+      </main>
+
+      <footer>
+        <span>© <span id="current-year"></span> PXLabs</span>
+        <span>NO TRACKERS · NO FRAMEWORKS · JUST HTML</span>
+      </footer>
+    </div>
+    <noscript>
+      <p class="noscript">JavaScript is required for the live click counters.</p>
+    </noscript>
+  </body>
+</html>
